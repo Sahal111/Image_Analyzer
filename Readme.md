@@ -1,18 +1,19 @@
 <div align="center">
 
-# 📸 Image Analyzer — From Photo to Numbers
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:1f6feb,100:8957e5&height=220&section=header&text=Image%20Analyzer&fontSize=58&fontColor=ffffff&fontAlignY=38&desc=From%20Photo%20to%20Numbers&descAlignY=60&descSize=22" alt="Image Analyzer banner" width="100%">
 
-> **A simple Python project that reveals what a digital image really is: numbers.**
+**A simple Python project that reveals what a digital image really is: numbers.**
 
-Proyek edukasional ini membongkar representasi digital dari sebuah foto untuk membuktikan secara visual dan matematis bahwa apa yang mata kita lihat sebagai sebuah gambar, komputer memprosesnya sebagai kumpulan matriks angka.
+<img src="https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+<img src="https://img.shields.io/badge/Pillow-Image%20%26%20EXIF-8957e5?style=for-the-badge" alt="Pillow">
+<img src="https://img.shields.io/badge/NumPy-Array-013243?style=for-the-badge&logo=numpy&logoColor=white" alt="NumPy">
+<img src="https://img.shields.io/badge/Matplotlib-Visualization-11557C?style=for-the-badge" alt="Matplotlib">
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![NumPy](https://img.shields.io/badge/Numpy-777BB4?style=for-the-badge&logo=numpy&logoColor=white)
-![Pillow](https://img.shields.io/badge/Pillow-F9A825?style=for-the-badge&logoColor=white)
-![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=for-the-badge&logoColor=white)
+<br><br>
 
-<!-- Add your hero screenshot here in the future -->
-<!-- <img src="assets/hero.png" width="800" alt="Hero Image"> -->
+<img src="assets/hero.png" alt="Photo to numbers: a photo and a 5x5 pixel zoom showing RGB values" width="100%">
+
+<sub>Foto asli (kiri) dan zoom 5 × 5 pixel (kanan). Setiap kotak adalah satu pixel, dan angka di dalamnya adalah nilai <b>R, G, B</b>-nya.</sub>
 
 </div>
 
@@ -20,137 +21,207 @@ Proyek edukasional ini membongkar representasi digital dari sebuah foto untuk me
 
 ## 📖 About The Project
 
-Proyek ini mendemonstrasikan sebuah konsep fundamental dalam ilmu komputer dan pemrosesan citra digital: **sebuah foto sebenarnya hanyalah sekumpulan angka.** 
+**Image Analyzer** adalah program Python **satu file** untuk tugas *Pengolahan Citra Digital*. Tujuannya satu: membuktikan bahwa foto yang kita lihat sebenarnya disimpan dan diproses komputer sebagai **kumpulan angka**.
 
-Program ini mengambil sebuah file foto (seperti `.jpg`), membaca strukturnya, dan membongkar representasinya lapis demi lapis dari sebuah gambar visual menjadi susunan matriks data menggunakan library Python.
+Program membaca satu foto, lalu "membongkarnya" langkah demi langkah:
 
 ```mermaid
 flowchart LR
-    A[📷 Photo] --> B[🟦 Pixels]
-    B --> C[🔴 Red]
-    B --> D[🟢 Green]
-    B --> E[🔵 Blue]
-    C --> F[🔢 Numbers 0-255]
+    A["📷 Photo"] --> B["🟦 Pixels"]
+    B --> C["🔴 Red"]
+    B --> D["🟢 Green"]
+    B --> E["🔵 Blue"]
+    C --> F["🔢 Numbers 0-255"]
     D --> F
     E --> F
-    F --> G[NumPy Array]
+    F --> G["🧮 NumPy Array"]
+
+    style A fill:#1f6feb,color:#fff,stroke:#fff
+    style F fill:#8957e5,color:#fff,stroke:#fff
+    style G fill:#cf222e,color:#fff,stroke:#fff
 ```
+
+> [!NOTE]
+> Kode dibuat sengaja sederhana: tanpa class, tanpa framework, dan hanya satu file, supaya setiap baris bisa dijelaskan satu per satu.
 
 ---
 
 ## 🎯 What Does This Project Prove?
 
-**"Apakah sebuah foto sebenarnya hanya kumpulan angka?"**
+### ❓ *"Apakah sebuah foto sebenarnya hanya kumpulan angka?"*
 
-Jawabannya adalah **Ya**. Proyek ini secara langsung membuktikan hal tersebut dengan membedah foto menjadi elemen terkecilnya:
-- Gambar tersusun dari jutaan titik kecil yang disebut **pixel**.
-- Setiap pixel memiliki nilai warna.
-- Dalam format RGB, warna tersebut memiliki tiga nilai ukur: Merah (Red), Hijau (Green), dan Biru (Blue).
-- Setiap nilai warna berada pada rentang **0–255** (representasi 8-bit).
-- Seluruh pixel tersebut dapat disimpan dan diproses oleh komputer sebagai sebuah **NumPy Array**.
+### ✅ Ya. Buktinya ada di program ini.
+
+| # | Fakta | Bukti di program |
+|:-:|---|---|
+| 1 | Gambar tersusun dari **pixel** | Total pixel dihitung dari `width × height` |
+| 2 | Setiap pixel punya **nilai warna** | `image_array[y, x]` menghasilkan angka |
+| 3 | RGB punya **3 nilai** per pixel | Shape array berakhir dengan `3` |
+| 4 | Setiap nilai berada di **0–255** (8-bit) | Statistik: min `0`, max `255`, tipe `uint8` |
+| 5 | Semua pixel bisa disimpan sebagai **NumPy array** | `np.array(image_rgb)` |
+| 6 | Komputer memproses **angkanya**, bukan "gambarnya" | Min, max, dan rata-rata dihitung dari array |
 
 ---
 
 ## ✨ Features
 
-Program ini membaca dan memproses gambar untuk menghasilkan berbagai analisis berikut:
-
-| Feature               | Description                                                   |
-| --------------------- | ------------------------------------------------------------- |
-| 🖼️ Image Information  | Menampilkan nama file, format, resolusi, mode, channel, dan jumlah pixel |
-| 📋 EXIF Metadata      | Membaca metadata bawaan kamera (seperti ISO, Exposure, Focal Length) jika tersedia |
-| 📍 GPS Extraction     | Mengekstrak koordinat GPS dan membuahkan link Google Maps otomatis (jika ada) |
-| 🔢 Pixel Analysis     | Mengubah gambar visual utuh menjadi struktur array angka        |
-| 🎨 RGB Analysis       | Membedah komposisi warna dasar Red, Green, dan Blue           |
-| 📊 Pixel Statistics   | Menghitung nilai minimum, maksimum, dan rata-rata intensitas pixel |
-| 🔍 Pixel Zoom         | Melihat inspeksi nilai pixel secara detail pada area 8x8      |
-| 🧮 Pixel Matrix       | Menampilkan potongan matrix angka murni (5x5 baris/kolom pertama) |
-| 📈 Visualization      | Memvisualisasikan gambar asli, channel merah, dan angka dalam pixel melalui Matplotlib |
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h4>🖼️ Image Information</h4>
+      Nama file, format, resolusi, width, height, mode, jumlah channel, dan total pixel.
+    </td>
+    <td width="50%" valign="top">
+      <h4>📋 EXIF Metadata</h4>
+      Tanggal pengambilan, merek dan model kamera, software, orientasi, focal length, ISO, exposure time, dan aperture <i>jika tersedia</i>.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <h4>📍 GPS Extraction</h4>
+      Koordinat derajat-menit-detik diubah ke desimal, lengkap dengan <b>link Google Maps</b>. Hanya ditampilkan jika datanya valid.
+    </td>
+    <td valign="top">
+      <h4>🔢 Pixel Analysis</h4>
+      Gambar diubah menjadi NumPy array, lengkap dengan shape dan tipe datanya.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <h4>🔍 Pixel Samples & Matrix</h4>
+      Nilai RGB di beberapa koordinat <code>(y, x)</code> dan potongan matrix 5 × 5 pixel.
+    </td>
+    <td valign="top">
+      <h4>📊 Pixel Statistics</h4>
+      Minimum, maksimum, dan rata-rata untuk seluruh array, serta per channel Red, Green, dan Blue.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" valign="top">
+      <h4>📈 Visualization</h4>
+      Foto dari array, channel merah (grayscale), dan zoom 8 × 8 pixel dengan angka tertulis di setiap pixel.
+    </td>
+  </tr>
+</table>
 
 ---
 
 ## 🛠️ Tech Stack
 
-Project ini murni menggunakan Python dan pustaka standar untuk data science.
-
-| Technology | Purpose                               |
-| ---------- | ------------------------------------- |
-| Python     | Core programming language             |
-| Pillow     | Image reading, conversion, & EXIF extraction |
-| NumPy      | Numerical image representation & matrix computation |
-| Matplotlib | Data and image visualization          |
+| Technology | Purpose |
+|---|---|
+| ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) | Bahasa pemrograman utama |
+| ![Pillow](https://img.shields.io/badge/Pillow-8957e5) | Membuka gambar, membaca informasi dasar dan metadata EXIF |
+| ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white) | Representasi numerik gambar dan perhitungan statistik |
+| ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C) | Visualisasi gambar, channel, dan nilai pixel |
 
 ---
 
 ## ⚙️ How It Works
 
-Proyek ini berjalan secara berurutan mengikuti pipeline pemrosesan citra standar:
+<p align="center">
+  <img src="assets/architecture.png" alt="Architecture: Photo, Pillow, basic info and EXIF, RGB conversion, NumPy array, analysis" width="100%">
+</p>
 
-### Step 1 — Load Image
-Foto (default: `foto3.jpg`) dibuka ke dalam memori menggunakan library Pillow (`PIL`).
+<details open>
+<summary><b>Step 1 — Load Image</b></summary>
 
-### Step 2 — Read Basic Information
-Program membaca metadata dasar file seperti nama file, format file, lebar (*width*), tinggi (*height*), mode warna, jumlah channel, dan mengkalkulasi total keseluruhan pixel.
+Foto dibuka dengan Pillow. Pada tahap ini foto masih berupa objek gambar, belum angka.
 
-### Step 3 — Extract EXIF
-Program memindai *Exchangeable Image File Format* (EXIF) untuk mencari tahu:
-- Kapan foto diambil
-- Menggunakan kamera & lensa apa (Make, Model, Focal Length, Aperture, ISO, Exposure Time)
-- Titik koordinat lokasi GPS (diubah menjadi format desimal)
-*(Catatan: Program dirancang untuk aman dari error jika foto tidak memiliki EXIF).*
+```python
+image = Image.open(image_path)
+```
+</details>
 
-### Step 4 — Convert Image to RGB
-Gambar dipaksa dikonversi menjadi format standar RGB (3 channel) untuk menghindari inkonsistensi dari format `.png` (RGBA) atau gambar hitam putih (*grayscale*).
+<details open>
+<summary><b>Step 2 — Read Basic Information</b></summary>
 
-### Step 5 — Convert Image to NumPy Array
-Momen transisi utama:
+Filename, format, width, height, mode, jumlah channel, dan total pixel (`width × height`).
+</details>
+
+<details open>
+<summary><b>Step 3 — Extract EXIF & GPS</b></summary>
+
+Program membaca tanggal pengambilan, kamera, model, software, orientation, focal length, ISO, exposure time, dan aperture. Hanya metadata yang benar-benar ada yang ditampilkan.
+
+- Jika foto tidak punya EXIF: `Metadata EXIF tidak tersedia.` (tanpa error)
+- Jika GPS kosong atau tidak valid: `GPS tidak tersedia`
+- Jika GPS valid: koordinat desimal + link Google Maps
+</details>
+
+<details open>
+<summary><b>Step 4 — Convert Image to RGB</b></summary>
+
+Gambar dikonversi ke RGB agar setiap pixel selalu memiliki tiga channel (PNG bisa berupa RGBA atau grayscale).
+</details>
+
+<details open>
+<summary><b>Step 5 — Convert Image to NumPy Array</b></summary>
+
 ```python
 image_array = np.array(image_rgb)
 ```
-Disinilah representasi gambar sepenuhnya berubah dari format visual menjadi format matematis (*data numerik*).
 
-### Step 6 — Analyze Pixel Values
-Program melihat bentuk (*shape*) data yaitu `(height, width, channel)` dan membedah makna nilai kombinasinya:
-- `[255, 0, 0]` → Merah maksimal
-- `[0, 255, 0]` → Hijau maksimal
-- `[0, 0, 255]` → Biru maksimal
+Di sinilah gambar berubah menjadi data numerik. Detailnya ada di bagian [The Moment a Photo Becomes Numbers](#-the-moment-a-photo-becomes-numbers).
+</details>
 
-### Step 7 — Statistics
-Program menggunakan perhitungan matematis NumPy untuk menghitung nilai terendah, tertinggi, dan rata-rata pixel, baik secara keseluruhan maupun per-channel (Red, Green, Blue).
+<details open>
+<summary><b>Step 6 — Analyze Pixel Values</b></summary>
 
-### Step 8 — Visualization
-Menggunakan Matplotlib, program akan merender pop-up GUI yang menampilkan 3 panel: foto hasil konstruksi array, visualisasi channel merah secara spesifik, dan area pixel yang di-*zoom* beserta nilai angkanya.
+Array berbentuk `(height, width, channel)`. Contoh arti nilai warna:
 
----
+```text
+[255,   0,   0]  →  Red
+[  0, 255,   0]  →  Green
+[  0,   0, 255]  →  Blue
+[  0,   0,   0]  →  Black
+[255, 255, 255]  →  White
+```
+</details>
 
-## 🗺️ Visual Pipeline
+<details open>
+<summary><b>Step 7 — Statistics</b></summary>
+
+Minimum, maksimum, dan rata-rata untuk seluruh array, lalu untuk channel Red, Green, dan Blue.
+</details>
+
+<details open>
+<summary><b>Step 8 — Visualization</b></summary>
+
+Tiga panel: foto asli dari array, channel merah, dan zoom pixel dengan nilai numeriknya.
+</details>
+
+### 🧭 Visual Pipeline
 
 ```mermaid
 flowchart TD
-    A[📷 Input Photo] --> B[🖼️ Pillow]
-    B --> C[📋 Basic Information]
-    B --> D[🏷️ EXIF Metadata]
-    B --> E[🎨 RGB Conversion]
-    E --> F[🔢 NumPy Array]
-    F --> G[🔍 Pixel Inspection]
-    F --> H[📊 Statistics]
-    F --> I[📈 Visualization]
+    A["📷 Input Photo"] --> B["🖼️ Pillow"]
+    B --> C["📋 Basic Information"]
+    B --> D["🏷️ EXIF Metadata"]
+    B --> E["🎨 RGB Conversion"]
+    E --> F["🔢 NumPy Array"]
+    F --> G["🔍 Pixel Inspection"]
+    F --> H["📊 Statistics"]
+    F --> I["📈 Visualization"]
+
+    style F fill:#cf222e,color:#fff,stroke:#fff
 ```
 
 ---
 
 ## 🔢 The Moment a Photo Becomes Numbers
 
-Bagian paling esensial dari kode ini hanyalah satu baris:
+> [!IMPORTANT]
+> Seluruh project berpusat pada **satu baris** ini.
 
 ```python
 image_array = np.array(image_rgb)
 ```
 
-Pada baris ini, komputer menelanjangi ilusi visual yang kita lihat. Sebuah gambar berubah bentuk menjadi matriks 3 dimensi yang berisi deretan angka seperti ini:
+Sebelum baris ini, foto hanyalah objek gambar milik Pillow. Sesudahnya, foto adalah tabel angka yang bisa dihitung, diiris, dan dianalisis.
 
 ```text
-Image (Visual)
+Image
  ↓
 ┌───────────────┐
 │ Pixel  Pixel  │
@@ -165,106 +236,168 @@ RGB values
 ]
 ```
 
-Nilai `[R, G, B]` adalah representasi numerik absolut yang memberitahu layar Anda seberapa terang lampu merah, hijau, dan biru harus dinyalakan pada satu titik spesifik.
+> Angka pada diagram di atas adalah **contoh konseptual**. Angka nyata dari foto sampel ada di gambar berikut.
+
+<p align="center">
+  <img src="assets/pixel-matrix.png" alt="Area 6x6 pixel from the sample photo, each cell colored and labeled with R, G, B values" width="560">
+</p>
+
+<p align="center"><sub>Area 6 × 6 pixel dari foto sampel. Warna setiap kotak dibuat dari tiga angka di dalamnya.</sub></p>
 
 ---
 
 ## 🧮 Image as a Matrix
 
-Saat dikonversi, gambar memiliki dimensi *shape* `(height, width, 3)`.
+Gambar RGB disimpan sebagai array dengan bentuk:
 
-Sebagai **contoh ilustrasi**, jika Anda memasukkan foto beresolusi 1080p:
-Shape-nya adalah `(1080, 1920, 3)`. 
-Ini berarti komputer melihat matriks dengan:
-- 1080 baris pixel ke bawah
-- 1920 kolom pixel ke samping
-- 3 channel warna untuk setiap perpotongan baris dan kolom.
+```text
+(height, width, 3)
+```
 
-Total pixel yang harus diproses adalah `1080 × 1920 = 2,073,600` pixel.
+Sebagai **contoh**, shape `(1080, 1920, 3)` berarti 1080 baris pixel, 1920 kolom pixel, dan 3 channel warna:
+
+```text
+1080 × 1920 = 2,073,600 pixels   (contoh perhitungan)
+```
+
+Pada foto sampel di repository ini, nilai nyatanya:
+
+| | Value |
+|---|---|
+| Shape | `(3072, 4096, 3)` |
+| Total pixel | `3072 × 4096 = 12,582,912` |
+| Total angka | `12,582,912 × 3 = 37,748,736` |
+| Ukuran file JPEG | sekitar 8,5 MB (hasil kompresi) |
 
 ---
 
 ## 🔍 Inside a Single Pixel
 
-Jika kita mengambil satu titik pixel saja di dalam memori komputer, strukturnya akan terlihat seperti ini:
-
 ```text
-Single Pixel Data
+Pixel
 ┌───────────────┐
 │ R = 120       │
 │ G = 85        │
 │ B = 42        │
 └───────────────┘
 ```
-Dalam program Python, ini ditulis sederhana sebagai array satu dimensi: `[120, 85, 42]`.
+
+```text
+[120, 85, 42]
+```
+
+Contoh di atas adalah ilustrasi satu pixel RGB. Di program, pixel diambil dengan `image_array[y, x]`: **baris (y) dulu, baru kolom (x)**, sesuai cara NumPy mengurutkan indeks.
 
 ---
 
 ## 📋 EXIF Metadata
 
-Penting untuk membedakan antara informasi gambar dan gambar itu sendiri.
-> **Metadata ≠ Pixel**
+> [!TIP]
+> **Metadata ≠ Pixel.** Metadata adalah informasi *tentang* foto. Pixel adalah isi visual foto itu sendiri. Menghapus metadata tidak mengubah tampilan foto.
 
-Metadata adalah data yang *mendeskripsikan* foto, yang disisipkan oleh kamera Anda, sementara pixel adalah isi data visualnya. Program ini dapat membaca:
+| Metadata | Meaning |
+|---|---|
+| `DateTimeOriginal` | Waktu pengambilan |
+| `Make` | Merek kamera |
+| `Model` | Model kamera |
+| `Software` | Software kamera |
+| `Orientation` | Instruksi orientasi tampilan |
+| `FocalLength` | Focal length |
+| `ISOSpeedRatings` | ISO |
+| `ExposureTime` | Waktu exposure |
+| `FNumber` | Aperture |
+| GPS | Lokasi, jika tersedia dan valid |
 
-| Metadata         | Meaning              |
-| ---------------- | -------------------- |
-| DateTimeOriginal | Waktu pengambilan    |
-| Make             | Merek kamera         |
-| Model            | Model kamera         |
-| FocalLength      | Focal length lensa   |
-| ISO              | Sensitivitas sensor  |
-| ExposureTime     | Waktu exposure       |
-| FNumber          | Bukaan (Aperture)    |
-| GPS              | Titik lokasi absolut |
-
-*(Catatan: Metadata ini tidak selalu ada; jika Anda men-download foto dari media sosial seperti WhatsApp atau Instagram, biasanya EXIF ini sudah dihapus).*
+Tidak semua foto memiliki EXIF. Foto screenshot atau foto kiriman aplikasi pesan sering kehilangan metadata tersebut.
 
 ---
 
 ## 📊 Visualization
 
-Program ini akan memunculkan jendela Matplotlib dengan tiga panel interaktif:
-
 <p align="center">
-  <!-- Replace with actual project screenshot -->
-  <img src="assets/analysis-result.png" width="900" alt="Matplotlib output analysis">
+  <img src="assets/analysis-result.png" alt="Three panels: original image from array, red channel, 8x8 pixel zoom with numbers" width="100%">
 </p>
 
-### ① Original Image
-Gambar utuh yang direkonstruksi ulang dan digambar secara visual murni dari NumPy array.
+| Panel | Isi |
+|---|---|
+| **① Original Image** | Gambar direkonstruksi dari NumPy array. Kotak merah menandai area zoom. |
+| **② Red Channel** | Intensitas merah dari 0 (hitam) sampai 255 (putih). |
+| **③ Pixel Zoom** | Area 8 × 8 pixel dengan nilai angka tertulis di setiap pixel. |
 
-### ② Red Channel
-Menunjukkan secara spesifik intensitas warna *Red* (Merah). Bagian putih berarti nilai merahnya mendekati 255 (terang), dan hitam berarti mendekati 0.
-
-### ③ Pixel Zoom
-Menampilkan area sangat kecil berukuran 8x8 pixel dari tengah gambar. Disini nilai angka setiap titik akan dituliskan langsung di atas warnanya.
+> [!NOTE]
+> Foto sampel tampak miring karena HP menyimpan pixel dalam posisi landscape dan hanya menambahkan tag EXIF `Orientation = 6` ("putar saat ditampilkan"). Array NumPy tidak menerapkan tag itu. Ini contoh nyata bahwa **metadata mengubah cara foto ditampilkan, tetapi tidak mengubah angka pixel**.
 
 ---
 
 ## 💻 Example Output
 
-Saat Anda menjalankan program di terminal, outputnya akan terlihat kurang lebih seperti ini (angka aktual bergantung pada foto Anda):
+Output nyata dari foto sampel (HP Motorola, foto tidak memiliki GPS yang tersimpan di file):
+
+<details open>
+<summary><b>Klik untuk membuka / menutup output terminal</b></summary>
 
 ```text
 === INFORMASI GAMBAR ===
-Nama file       : foto3.jpg
+Nama file       : foto.jpg
 Format          : JPEG
-Resolusi        : 1920 x 1080
-Width (lebar)   : 1920 pixel
-Height (tinggi) : 1080 pixel
+Resolusi        : 4096 x 3072
+Width (lebar)   : 4096 pixel
+Height (tinggi) : 3072 pixel
 Mode            : RGB
 Jumlah channel  : 3
-Total pixel     : 2073600
+Total pixel     : 12582912
+
+=== METADATA EXIF ===
+Tanggal pengambilan : 2026:10:06 15:21:49
+Merek kamera        : motorola
+Model kamera        : moto g57 power
+Orientasi           : 6
+Focal length        : 4.81
+ISO                 : 227
+Exposure time       : 0.007741009
+Aperture (F)        : 1.8
+GPS                 : tidak tersedia (lokasi tidak direkam saat foto diambil)
 
 === REPRESENTASI ANGKA ===
-Shape array : (1080, 1920, 3)
+Shape array : (3072, 4096, 3)
 Data type   : uint8
 
+=== CONTOH NILAI PIXEL ===
+Pixel (0, 0)           : [34 40 14] -> R=34, G=40, B=14
+Pixel (0, 1)           : [25 32  1] -> R=25, G=32, B=1
+Pixel (1, 0)           : [42 46 19] -> R=42, G=46, B=19
+Pixel (100, 100)       : [79 74 44] -> R=79, G=74, B=44
+Pixel (200, 200)       : [90 87 52] -> R=90, G=87, B=52
+Pixel (300, 300)       : [157 158  39] -> R=157, G=158, B=39
+Pixel (1536, 2048)     : [53 71 31] -> R=53, G=71, B=31
+Pixel (3071, 4095)     : [129 105  59] -> R=129, G=105, B=59
+
 === POTONGAN MATRIX PIXEL (5 baris x 5 kolom pertama) ===
-[[[120  80  50]
-  [121  81  51]
+[[[ 34  40  14]
+  [ 25  32   1]
+  [ 29  35   1]
+  [105 112  70]
+  [103 109  61]]
   ...
+
+=== STATISTIK PIXEL (semua channel) ===
+Nilai minimum   : 0
+Nilai maksimum  : 255
+Nilai rata-rata : 85.07
+
+=== STATISTIK PER CHANNEL ===
+Red   -> min 0, max 255, rata-rata 98.76
+Green -> min 0, max 255, rata-rata 101.83
+Blue  -> min 0, max 255, rata-rata 54.62
+```
+
+</details>
+
+Jika foto memiliki GPS yang valid, dua baris tambahan muncul di bagian metadata:
+
+```text
+Koordinat (Maps)    : <latitude>, <longitude>
+Link Google Maps    : https://www.google.com/maps?q=<latitude>,<longitude>
 ```
 
 ---
@@ -273,65 +406,93 @@ Data type   : uint8
 
 ```text
 image-analyzer/
-├── analisis_foto.py       # Core program script
-├── foto3.jpg              # Default image input 
-├── README.md              # Project documentation
-└── assets/                # Folder for documentation images
+├── analisis_foto.py        # program utama (satu file)
+├── foto.jpg                # foto yang dianalisis (ganti dengan foto Anda)
+├── README.md
+└── assets/
+    ├── hero.png
+    ├── analysis-result.png
+    ├── pixel-matrix.png
+    └── architecture.png
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-### Requirements
-- Python 3.x terinstall di komputer Anda.
+**1. Requirements:** Python 3.x, Pillow, NumPy, Matplotlib
 
-### 1. Install Dependencies
-Buka terminal/CMD dan install library yang dibutuhkan:
+**2. Install dependencies**
+
 ```bash
 pip install pillow numpy matplotlib
 ```
 
-### 2. Add your image
-Letakkan foto Anda di folder yang sama dengan file script.
-Buka file `analisis_foto.py`, lalu ubah nama file pada baris input jika Anda menggunakan nama gambar yang berbeda:
+**3. Add your image**
+
+Letakkan foto di folder yang sama dengan script, lalu sesuaikan nama file di bagian atas program:
+
 ```python
-image_path = "foto3.jpg" # Ganti dengan nama foto Anda
+image_path = "foto.jpg"
 ```
 
-### 3. Run the Program
-Eksekusi program melalui terminal:
+**4. Run**
+
 ```bash
 python analisis_foto.py
 ```
 
+> [!TIP]
+> Untuk metadata terlengkap, gunakan foto asli dari galeri pribadi dengan fitur lokasi kamera aktif, bukan foto yang dikirim lewat aplikasi pesan.
+
 ---
 
-## 💻 Code Highlight
+## 🧩 Code Highlights
 
-Dua baris kode ini adalah inti utama dari keseluruhan proyek:
+**① Foto menjadi angka**
 
 ```python
 image_rgb = image.convert("RGB")
 image_array = np.array(image_rgb)
 ```
-**Mengapa ini penting?** 
-Baris pertama memastikan bahwa foto memiliki standar yang seragam (memiliki ruang warna Red, Green, dan Blue). Baris kedua adalah jembatan dari dunia desain grafis/visual ke dunia *data science* & komputasi numerik dengan mengubahnya menjadi array.
+
+`convert("RGB")` memastikan setiap pixel punya tiga channel. `np.array()` menyalin seluruh pixel ke array bertipe `uint8` (0–255).
+
+**② Memisahkan channel warna**
+
+```python
+red_channel = image_array[:, :, 0]
+```
+
+Artinya: semua baris, semua kolom, channel ke-0 (Red). Indeks `1` untuk Green dan `2` untuk Blue.
+
+**③ Mengubah GPS menjadi koordinat desimal**
+
+```python
+lat_desimal = float(lat[0]) + float(lat[1]) / 60 + float(lat[2]) / 3600
+```
+
+GPS di EXIF berupa derajat, menit, dan detik. `float()` dibutuhkan karena Pillow menyimpannya sebagai pecahan. Hasilnya bernilai negatif untuk Selatan (S) dan Barat (W).
 
 ---
 
 ## 🎓 What You Learn
 
-Proyek sederhana ini mencakup banyak konsep teknis fundamental:
-- **Image Representation**: Bagaimana komputer memanipulasi gambar.
-- **Pixel & RGB**: Anatomi terkecil dari tampilan visual.
-- **Matrix & NumPy Arrays**: Konsep baris dan kolom dalam data numerik Python.
-- **EXIF Metadata**: Cara membaca data tersembunyi dari sensor kamera.
-- **Data Visualization**: Memetakan angka ke dalam grafik menggunakan Matplotlib.
+| Konsep | Di mana muncul |
+|---|---|
+| Image representation, pixel | Informasi gambar, total pixel |
+| Model warna RGB dan channel | Konversi RGB, pemisahan channel |
+| NumPy array dan matrix | Shape `(height, width, channel)`, slicing |
+| Metadata EXIF vs data pixel | Metadata, orientasi, GPS |
+| Representasi 8-bit (`uint8`, 0–255) | Tipe data dan statistik |
+| Basic image processing | Statistik pixel dan per channel |
+| Data visualization | Tiga panel Matplotlib |
 
 ---
 
 ## 💡 Key Takeaway
+
+<div align="center">
 
 ```text
 📷 PHOTO
@@ -345,27 +506,36 @@ Proyek sederhana ini mencakup banyak konsep teknis fundamental:
 🧮 NUMPY ARRAY
 ```
 
-> **What we see as an image, a computer sees as numbers.**
+### What we see as an image, a computer sees as numbers.
+
+</div>
 
 ---
 
 ## ⚠️ Limitations
 
-- **EXIF & GPS Ketergantungan File:** Program ini hanya bisa membaca EXIF/GPS jika foto tersebut masih menyimpan datanya. (Gambar hasil edit atau kiriman chat biasanya kehilangan data ini).
-- **Single Image Analysis:** Saat ini program hanya ditujukan untuk membaca satu file hardcoded yang ditentukan di dalam kode.
-- **Visualisasi Statis:** Visualisasi di-render menggunakan Matplotlib window yang bersifat pop-up, bukan antarmuka web.
-- **8-bit Limit:** Representasi nilai dibatasi dari 0 hingga 255 (*uint8*).
+- EXIF tidak selalu tersedia, dan sebagian metadata bisa kosong.
+- GPS hanya tampil jika koordinat benar-benar tersimpan **di dalam file** foto. Lokasi yang terlihat di aplikasi galeri belum tentu ikut tersimpan di file.
+- Program menganalisis **satu gambar** per eksekusi.
+- Array tidak menerapkan tag `Orientation` dari EXIF, sehingga foto portrait bisa berbentuk landscape.
+- Nilai RGB memakai representasi 8-bit setelah gambar dikonversi ke RGB.
+- Visualisasi hanya ditampilkan lewat jendela Matplotlib dan tidak disimpan otomatis.
 
 ---
 
 ## 🛣️ Future Development
 
-Beberapa ide pengembangan yang bisa dilakukan ke depannya untuk proyek ini:
-- [ ] Menerima input gambar melalui *Drag & Drop* atau *Command Line Arguments (CLI)*.
-- [ ] Menambahkan perbandingan visual histogram distribusi warna RGB.
-- [ ] Menganalisis proporsi komposisi warna (color distribution).
-- [ ] Mengimplementasikan *Edge Detection* (Deteksi tepi) sederhana dengan modifikasi array numerik.
-- [ ] Membungkus output ke dalam format Web Interface interaktif.
+Ide berikut masih **rencana**, belum tersedia di versi saat ini:
+
+- [ ] Analisis beberapa gambar sekaligus
+- [ ] Histogram RGB
+- [ ] Analisis grayscale
+- [ ] Perbandingan ukuran gambar
+- [ ] Edge detection
+- [ ] Distribusi warna
+- [ ] Visualisasi interaktif
+- [ ] Drag & drop image
+- [ ] Antarmuka web
 
 ---
 
@@ -373,4 +543,14 @@ Beberapa ide pengembangan yang bisa dilakukan ke depannya untuk proyek ini:
 
 **Muhammad Sahal Anwar Hadi**
 
-*(Repository ini dibuat sebagai bentuk eksplorasi edukasional pada Python, Image Processing, dan struktur data).*
+<!-- Add GitHub profile link here -->
+
+<br>
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:8957e5,50:1f6feb,100:0d1117&height=110&section=footer" alt="footer" width="100%">
+
+<sub>Made for learning digital image processing with Python.</sub>
+
+</div>
