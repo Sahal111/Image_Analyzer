@@ -29,6 +29,8 @@ print("=== 1. INFORMASI DASAR ===")
 
 image = Image.open(image_path)  # membuka file (belum berupa angka)
 
+format_asli = image.format  # simpan dulu, sebelum diputar
+
 # Metadata dibaca SEKARANG, sebelum foto diputar (langkah di bawah)
 exif = image.getexif()
 
@@ -39,7 +41,7 @@ image = ImageOps.exif_transpose(image)
 width, height = image.size  # PIL: (lebar, tinggi)
 
 print("Nama file      :", os.path.basename(image_path))
-print("Format         :", image.format)
+print("Format         :", format_asli)
 print("Resolusi       :", width, "x", height)
 print("Mode warna     :", image.mode)  # RGB = Red, Green, Blue
 print("Total pixel    :", width * height)
