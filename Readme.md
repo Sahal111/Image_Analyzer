@@ -41,8 +41,6 @@ flowchart LR
     style G fill:#cf222e,color:#fff,stroke:#fff
 ```
 
-> [!NOTE]
-> Kode dibuat sengaja sederhana: tanpa class, tanpa framework, dan hanya satu file, supaya setiap baris bisa dijelaskan satu per satu.
 
 ---
 
