@@ -404,11 +404,11 @@ Link Google Maps    : https://www.google.com/maps?q=<latitude>,<longitude>
 
 ```text
 image-analyzer/
-├── analisis_foto.py        # program utama (satu file)
-├── foto.jpg                # foto yang dianalisis (ganti dengan foto Anda)
+├── main.py        # program utama 
 ├── README.md
 └── assets/
     ├── hero.png
+    ├── foto.jpg                # foto yang dianalisis (ganti dengan foto Anda)
     ├── analysis-result.png
     ├── pixel-matrix.png
     └── architecture.png
