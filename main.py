@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt        # Matplotlib: menampilkan visualisasi
 # INPUT: ganti "foto.jpg" sesuai nama file foto Anda.
 # Taruh foto di folder yang sama dengan file .py ini.
 # --------------------------------------------------------------
-image_path = "foto3.jpg"
+image_path = "assets/foto.jpg"
 
 
 # ==============================================================
