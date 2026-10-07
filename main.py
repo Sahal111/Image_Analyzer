@@ -20,7 +20,8 @@ from PIL import Image, ImageOps, ExifTags  # Pillow: membuka & menyimpan foto
 # Lokasi foto dan folder hasil (selalu relatif terhadap file .py ini)
 folder_script = os.path.dirname(os.path.abspath(__file__))
 image_path = os.path.join(folder_script, "assets", "foto.jpg")
-
+folder_hasil = os.path.join(folder_script, "hasil")
+os.makedirs(folder_hasil, exist_ok=True)
 
 # ==============================================================
 # BAGIAN 1 - BUKA FOTO & INFORMASI DASAR
@@ -231,7 +232,7 @@ print("=== 9. ANGKA MENJADI FOTO ===")
 
 # --- 9a. Simpan array jadi foto, baca lagi, bandingkan ---
 # PNG bersifat lossless (tidak mengubah angka), jadi hasilnya harus identik.
-path_rekonstruksi = os.path.join(folder_script, "hasil_rekonstruksi.png")
+path_rekonstruksi = os.path.join(folder_hasil, "hasil_rekonstruksi.png")
 Image.fromarray(image_array).save(path_rekonstruksi)
 baca_ulang = np.array(Image.open(path_rekonstruksi))
 print(
@@ -247,8 +248,8 @@ negatif = 255 - image_array
 modifikasi = image_array.copy()  # .copy() agar array asli tidak rusak
 modifikasi[50:150, 50:150] = [255, 0, 0]
 
-Image.fromarray(negatif).save(os.path.join(folder_script, "hasil_negatif.png"))
-Image.fromarray(modifikasi).save(os.path.join(folder_script, "hasil_kotak_merah.png"))
+Image.fromarray(negatif).save(os.path.join(folder_hasil, "hasil_negatif.png"))
+Image.fromarray(modifikasi).save(os.path.join(folder_hasil, "hasil_kotak_merah.png"))
 print("9b. Angka diubah -> gambar berubah (negatif & kotak merah disimpan).")
 
 # --- 9c. Gambar dari NOL: hanya dari angka yang kita tulis sendiri ---
@@ -265,7 +266,7 @@ print("9c. Gambar buatan sendiri, shape:", buatan_sendiri.shape, "= 6 pixel")
 
 # Diperbesar dengan NEAREST agar tiap pixel terlihat jelas sebagai kotak
 Image.fromarray(buatan_sendiri).resize((300, 200), Image.NEAREST).save(
-    os.path.join(folder_script, "hasil_buatan_sendiri.png")
+    os.path.join(folder_hasil, "hasil_buatan_sendiri.png")
 )
 print()
 
