@@ -82,13 +82,12 @@ else:
     print("GPS                 : tidak tersedia")
 print()
 
-
 # ==============================================================
-# BAGIAN 3 - FOTO MENJADI ANGKA  (INTI PEMBUKTIAN)
+# BAGIAN 3 - FOTO MENJADI ANGKA  
 # ==============================================================
 print("=== 3. FOTO MENJADI ANGKA ===")
 
-image_rgb = image.convert("RGB")  # pastikan 3 channel (R, G, B)
+image_rgb = image.convert("RGB")  
 image_array = np.array(image_rgb)  # <-- DI SINILAH FOTO JADI ANGKA
 
 print("Shape array :", image_array.shape, "-> (tinggi, lebar, channel)")
@@ -107,10 +106,8 @@ print("  [  0,   0,   0] = hitam")
 print("  [255, 255, 255] = putih")
 print()
 
-
 # ==============================================================
 # BAGIAN 4 - NILAI SATU PIXEL
-# Cara akses: array[baris, kolom]  (baris = y, kolom = x)
 # ==============================================================
 print("=== 4. NILAI PIXEL ===")
 
@@ -124,10 +121,8 @@ for y, x in titik_sampel:
     print(f"Pixel (baris={y}, kolom={x}) -> R={r}, G={g}, B={b}")
 print()
 
-
 # ==============================================================
 # BAGIAN 5 - POTONGAN MATRIX
-# 5 baris x 5 kolom pertama saja (bukan seluruh gambar)
 # ==============================================================
 print("=== 5. POTONGAN MATRIX (5x5 pixel pertama) ===")
 
@@ -140,11 +135,9 @@ print()
 
 # ==============================================================
 # BAGIAN 6 - STATISTIK, UKURAN DATA, JUMLAH WARNA
-# Semua ini bisa dihitung karena gambar sudah menjadi angka.
 # ==============================================================
 print("=== 6. STATISTIK ===")
 
-# Pisahkan 3 channel: [:, :, 0] = semua baris, semua kolom, channel ke-0
 red = image_array[:, :, 0]
 green = image_array[:, :, 1]
 blue = image_array[:, :, 2]
@@ -154,7 +147,6 @@ print(f"Green -> min {green.min()}, max {green.max()}, rata-rata {green.mean():.
 print(f"Blue  -> min {blue.min()}, max {blue.max()}, rata-rata {blue.mean():.2f}")
 print()
 
-# Ukuran data: array mentah vs file JPEG
 ukuran_array = image_array.nbytes  # tinggi x lebar x 3 byte
 ukuran_file = os.path.getsize(image_path)
 print(f"Ukuran array (mentah)  : {ukuran_array:,} byte")
@@ -162,15 +154,12 @@ print(f"Ukuran file di disk    : {ukuran_file:,} byte")
 print("File lebih kecil karena JPEG dikompresi; array adalah hasil decode.")
 print()
 
-# Jumlah kemungkinan warna
 print("Satu channel : 256 kemungkinan (0-255) = 8 bit")
 print("Tiga channel : 256 x 256 x 256 =", f"{256 ** 3:,}", "warna (24 bit)")
 print()
 
-
 # ==============================================================
 # BAGIAN 7 - GRAYSCALE: 3 ANGKA JADI 1 ANGKA PER PIXEL
-# Rumus mata manusia: lebih peka hijau daripada biru.
 # ==============================================================
 print("=== 7. GRAYSCALE ===")
 
@@ -186,10 +175,8 @@ print(
 )
 print()
 
-
 # ==============================================================
 # BAGIAN 8 - BYTE MENTAH FILE
-# File foto pun hanya deretan angka (byte) di disk.
 # ==============================================================
 print("=== 8. BYTE MENTAH FILE ===")
 
@@ -201,9 +188,8 @@ print("16 byte pertama (heksadesimal):", awal_file.hex(" ").upper())
 print("JPEG selalu diawali FF D8 -> itu 'tanda tangan' file JPEG.")
 print()
 
-
 # ==============================================================
-# BAGIAN 9 - ANGKA MENJADI FOTO (BUKTI ARAH SEBALIKNYA)
+# BAGIAN 9 - ANGKA MENJADI FOTO 
 # ==============================================================
 print("=== 9. ANGKA MENJADI FOTO ===")
 
@@ -247,13 +233,11 @@ Image.fromarray(buatan_sendiri).resize((300, 200), Image.NEAREST).save(
 )
 print()
 
-
 # ==============================================================
 # BAGIAN 10 - VISUALISASI
 # ==============================================================
 
 # ---------- Figure 1: dari foto sampai angka ----------
-# Ambil area 8x8 pixel dari tengah gambar untuk diperlihatkan angkanya
 ukuran_zoom = min(8, height, width)
 y0 = min(height // 2, height - ukuran_zoom)
 x0 = min(width // 2, width - ukuran_zoom)
@@ -261,7 +245,7 @@ area_zoom = red[y0 : y0 + ukuran_zoom, x0 : x0 + ukuran_zoom]
 
 plt.figure(figsize=(15, 5))
 
-# Panel 1: foto asli, kotak merah = area yang diperbesar
+# Panel 1: foto asli, kotak merah menandai area yang di-zoom
 plt.subplot(1, 3, 1)
 plt.imshow(image_array)
 plt.title("1. Foto (dari array)")
@@ -304,7 +288,6 @@ plt.axis("off")
 
 plt.tight_layout()
 plt.show()
-
 
 # ---------- Figure 2: channel berwarna + histogram + grayscale ----------
 # Channel berwarna: nol-kan dua channel lain, sisakan satu
@@ -352,7 +335,6 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-
 # ---------- Figure 3: bukti angka -> foto ----------
 plt.figure(figsize=(15, 4))
 
@@ -378,7 +360,6 @@ plt.axis("off")
 
 plt.tight_layout()
 plt.show()
-
 
 # ==============================================================
 # BAGIAN 11 - KESIMPULAN
