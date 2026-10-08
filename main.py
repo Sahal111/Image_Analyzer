@@ -1,5 +1,5 @@
 # ==============================================================
-# analisis_foto.py
+# Judul : Image Analyzer (Python)
 # TUJUAN : Membuktikan bahwa foto (citra digital) adalah susunan angka.
 # ==============================================================
 
