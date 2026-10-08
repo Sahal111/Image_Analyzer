@@ -1,25 +1,15 @@
 # ==============================================================
 # analisis_foto.py
 # TUJUAN : Membuktikan bahwa foto (citra digital) adalah susunan angka.
-#
-# ALUR PEMBUKTIAN (dua arah):
-#   FOTO  ->  ANGKA   (bagian 3-8)  : foto bisa dibaca sebagai angka
-#   ANGKA ->  FOTO    (bagian 9)    : angka bisa dijadikan foto lagi
-# Kalau dua arah ini terbukti, berarti foto = angka.
-#
-# CARA PAKAI:
-#   1. Taruh foto di folder "assets" dengan nama foto.jpg
-#   2. Jalankan: python analisis_foto.py
 # ==============================================================
 
 import os
-import numpy as np  # NumPy: tempat menyimpan angka (array)
-import matplotlib.pyplot as plt  # Matplotlib: menampilkan grafik/gambar
-from PIL import Image, ImageOps, ExifTags  # Pillow: membuka & menyimpan foto
+import numpy as np  
+import matplotlib.pyplot as plt  
+from PIL import Image, ImageOps, ExifTags  
 
-# Lokasi foto dan folder hasil (selalu relatif terhadap file .py ini)
 folder_script = os.path.dirname(os.path.abspath(__file__))
-image_path = os.path.join(folder_script, "assets", "IMG_20261008_142555271_HDR.jpg")
+image_path = os.path.join(folder_script, "assets", "IMG_20261008_142514_031.jpg")
 folder_hasil = os.path.join(folder_script, "hasil")
 os.makedirs(folder_hasil, exist_ok=True)
 
@@ -28,42 +18,30 @@ os.makedirs(folder_hasil, exist_ok=True)
 # ==============================================================
 print("=== 1. INFORMASI DASAR ===")
 
-image = Image.open(image_path)  # membuka file (belum berupa angka)
-
-format_asli = image.format  # simpan dulu, sebelum diputar
-
-# Metadata dibaca SEKARANG, sebelum foto diputar (langkah di bawah)
+image = Image.open(image_path)  
+format_asli = image.format  
 exif = image.getexif()
-
-# Foto dari HP sering tersimpan "miring" + tag Orientation.
-# Baris ini memutar foto agar sama seperti yang terlihat di galeri.
 image = ImageOps.exif_transpose(image)
-
-width, height = image.size  # PIL: (lebar, tinggi)
+width, height = image.size  
 
 print("Nama file      :", os.path.basename(image_path))
 print("Format         :", format_asli)
 print("Resolusi       :", width, "x", height)
-print("Mode warna     :", image.mode)  # RGB = Red, Green, Blue
+print("Mode warna     :", image.mode) 
 print("Total pixel    :", width * height)
 print()
 
-
 # ==============================================================
 # BAGIAN 2 - METADATA (EXIF)
-# Metadata = data TENTANG foto (kamera, tanggal, lokasi).
-# Metadata BUKAN pixel. Pixel adalah isi gambarnya.
 # ==============================================================
 print("=== 2. METADATA EXIF ===")
 
-# Kumpulkan semua metadata ke dictionary {nama: nilai}
 metadata = {}
 for kode, nilai in exif.items():
     metadata[ExifTags.TAGS.get(kode, kode)] = nilai
 for kode, nilai in exif.get_ifd(0x8769).items():  # 0x8769 = bagian detail kamera
     metadata[ExifTags.TAGS.get(kode, kode)] = nilai
-
-# Tampilkan hanya metadata yang ada
+    
 yang_ditampilkan = [
     ("DateTimeOriginal", "Tanggal pengambilan"),
     ("Make", "Merek kamera"),
@@ -81,7 +59,6 @@ for nama_exif, label in yang_ditampilkan:
 if not ada_metadata:
     print("Metadata kamera tidak tersedia.")
 
-# --- GPS (dicek terpisah, tidak bergantung metadata lain) ---
 gps = exif.get_ifd(0x8825)  # 0x8825 = bagian GPS
 if 2 in gps and 4 in gps:  # 2 = latitude, 4 = longitude
     lat, lon = gps[2], gps[4]  # bentuknya (derajat, menit, detik)
