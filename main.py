@@ -19,7 +19,7 @@ from PIL import Image, ImageOps, ExifTags  # Pillow: membuka & menyimpan foto
 
 # Lokasi foto dan folder hasil (selalu relatif terhadap file .py ini)
 folder_script = os.path.dirname(os.path.abspath(__file__))
-image_path = os.path.join(folder_script, "assets", "foto.jpg")
+image_path = os.path.join(folder_script, "assets", "IMG_20261008_142555271_HDR.jpg")
 folder_hasil = os.path.join(folder_script, "hasil")
 os.makedirs(folder_hasil, exist_ok=True)
 
