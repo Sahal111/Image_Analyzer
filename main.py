@@ -4,9 +4,9 @@
 # ==============================================================
 
 import os
-import numpy as np  
-import matplotlib.pyplot as plt  
-from PIL import Image, ImageOps, ExifTags  
+import numpy as np
+import matplotlib.pyplot as plt
+from PIL import Image, ImageOps, ExifTags
 
 folder_script = os.path.dirname(os.path.abspath(__file__))
 image_path = os.path.join(folder_script, "assets", "IMG_20261008_142514_031.jpg")
@@ -18,16 +18,16 @@ os.makedirs(folder_hasil, exist_ok=True)
 # ==============================================================
 print("=== 1. INFORMASI DASAR ===")
 
-image = Image.open(image_path)  
-format_asli = image.format  
+image = Image.open(image_path)
+format_asli = image.format
 exif = image.getexif()
 image = ImageOps.exif_transpose(image)
-width, height = image.size  
+width, height = image.size
 
 print("Nama file      :", os.path.basename(image_path))
 print("Format         :", format_asli)
 print("Resolusi       :", width, "x", height)
-print("Mode warna     :", image.mode) 
+print("Mode warna     :", image.mode)
 print("Total pixel    :", width * height)
 print()
 
@@ -41,7 +41,7 @@ for kode, nilai in exif.items():
     metadata[ExifTags.TAGS.get(kode, kode)] = nilai
 for kode, nilai in exif.get_ifd(0x8769).items():  # 0x8769 = bagian detail kamera
     metadata[ExifTags.TAGS.get(kode, kode)] = nilai
-    
+
 yang_ditampilkan = [
     ("DateTimeOriginal", "Tanggal pengambilan"),
     ("Make", "Merek kamera"),
@@ -68,9 +68,9 @@ if 2 in gps and 4 in gps:  # 2 = latitude, 4 = longitude
     lon_desimal = float(lon[0]) + float(lon[1]) / 60 + float(lon[2]) / 3600
 
     # Selatan (S) dan Barat (W) bernilai negatif
-    if gps.get(1) == "S":
+    if gps.get(1) == "S":   # 1 = latitude reference (N/S)
         lat_desimal = -lat_desimal
-    if gps.get(3) == "W":
+    if gps.get(3) == "W":   # 3 = longitude reference (E/W)
         lon_desimal = -lon_desimal
 
     print(f"Koordinat GPS       : {lat_desimal:.6f}, {lon_desimal:.6f}")
@@ -83,11 +83,11 @@ else:
 print()
 
 # ==============================================================
-# BAGIAN 3 - FOTO MENJADI ANGKA  
+# BAGIAN 3 - FOTO MENJADI ANGKA
 # ==============================================================
 print("=== 3. FOTO MENJADI ANGKA ===")
 
-image_rgb = image.convert("RGB")  
+image_rgb = image.convert("RGB")
 image_array = np.array(image_rgb)  # <-- DI SINILAH FOTO JADI ANGKA
 
 print("Shape array :", image_array.shape, "-> (tinggi, lebar, channel)")
@@ -189,7 +189,7 @@ print("JPEG selalu diawali FF D8 -> itu 'tanda tangan' file JPEG.")
 print()
 
 # ==============================================================
-# BAGIAN 9 - ANGKA MENJADI FOTO 
+# BAGIAN 9 - ANGKA MENJADI FOTO
 # ==============================================================
 print("=== 9. ANGKA MENJADI FOTO ===")
 
