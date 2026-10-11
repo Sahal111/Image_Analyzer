@@ -289,7 +289,7 @@ plt.axis("off")
 plt.tight_layout()
 plt.show()
 
-# ---------- Figure 2: channel berwarna + histogram + grayscale ----------
+# ---------- Figure 2: channel berwarna + grayscale ----------
 # Channel berwarna: nol-kan dua channel lain, sisakan satu
 hanya_red = np.zeros_like(image_array)
 hanya_red[:, :, 0] = red
@@ -298,39 +298,27 @@ hanya_green[:, :, 1] = green
 hanya_blue = np.zeros_like(image_array)
 hanya_blue[:, :, 2] = blue
 
-plt.figure(figsize=(15, 8))
+plt.figure(figsize=(15, 6))
 
-plt.subplot(2, 4, 1)
+plt.subplot(1, 4, 1)
 plt.imshow(hanya_red)
 plt.title("Channel R (berwarna)")
 plt.axis("off")
 
-plt.subplot(2, 4, 2)
+plt.subplot(1, 4, 2)
 plt.imshow(hanya_green)
 plt.title("Channel G (berwarna)")
 plt.axis("off")
 
-plt.subplot(2, 4, 3)
+plt.subplot(1, 4, 3)
 plt.imshow(hanya_blue)
 plt.title("Channel B (berwarna)")
 plt.axis("off")
 
-plt.subplot(2, 4, 4)
+plt.subplot(1, 4, 4)
 plt.imshow(gray, cmap="gray", vmin=0, vmax=255)
 plt.title("Grayscale (1 angka/pixel)")
 plt.axis("off")
-
-# Histogram: berapa banyak pixel untuk setiap nilai 0-255
-plt.subplot(2, 1, 2)
-plt.hist(red.ravel(), bins=256, range=(0, 255), color="red", alpha=0.5, label="Red")
-plt.hist(
-    green.ravel(), bins=256, range=(0, 255), color="green", alpha=0.5, label="Green"
-)
-plt.hist(blue.ravel(), bins=256, range=(0, 255), color="blue", alpha=0.5, label="Blue")
-plt.title("Histogram: sebaran angka tiap channel")
-plt.xlabel("Nilai pixel (0-255)")
-plt.ylabel("Jumlah pixel")
-plt.legend()
 
 plt.tight_layout()
 plt.show()
