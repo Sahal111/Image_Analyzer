@@ -79,7 +79,7 @@ Jumlah kemungkinan warna per pixel: **256 × 256 × 256 = 16.777.216 warna** (24
 | 7 | **Grayscale** | 3 angka per pixel menjadi 1 angka (rumus kepekaan mata manusia) |
 | 8 | **Byte Mentah File** | Membuktikan file JPEG diawali *signature* `FF D8` |
 | 9 | **Angka → Foto** | Rekonstruksi lossless, negatif, kotak merah, dan gambar dari nol |
-| 10 | **Visualisasi** | 3 figure Matplotlib: zoom angka, channel RGB, histogram, perbandingan |
+| 10 | **Visualisasi** | 3 figure Matplotlib: zoom angka, channel RGB dan grayscale, serta perbandingan hasil modifikasi foto |
 
 ### 🔬 Pembuktian dua arah
 
@@ -245,7 +245,7 @@ Jadi: Foto = Pixel = Angka RGB (0-255) = Array NumPy
 | 🐍 **Python** | Bahasa pemrograman utama |
 | 🖼️ **Pillow (PIL)** | Membuka, memutar, dan menyimpan gambar, serta membaca EXIF |
 | 🔢 **NumPy** | Menyimpan dan memanipulasi pixel sebagai array |
-| 📊 **Matplotlib** | Visualisasi gambar, channel warna, dan histogram |
+| 📊 **Matplotlib** | Visualisasi gambar, pembagian channel RGB, grayscale, dan perbandingan hasil modifikasi foto |
 
 ---
 
@@ -255,24 +255,6 @@ Jadi: Foto = Pixel = Angka RGB (0-255) = Array NumPy
 - 📦 **Ukuran data:** array mentah jauh lebih besar dari file JPEG karena JPEG dikompresi, sedangkan array adalah hasil *decode*.
 - ✅ **Lossless:** rekonstruksi memakai **PNG** agar angka tidak berubah sedikit pun (JPEG bersifat *lossy*).
 - 📱 **Orientasi:** foto HP sering tersimpan miring dengan tag *Orientation*. Program memutarnya otomatis lewat `ImageOps.exif_transpose`.
-
----
-
-## 🗺️ Roadmap
-
-- [x] Foto menjadi array NumPy
-- [x] Pembacaan metadata EXIF dan GPS
-- [x] Statistik channel RGB
-- [x] Konversi grayscale
-- [x] Rekonstruksi angka menjadi foto
-- [x] Visualisasi dengan Matplotlib
-- [ ] Analisis beberapa gambar sekaligus
-- [ ] Edge detection
-- [ ] Distribusi warna dominan
-- [ ] Perbandingan ukuran gambar
-- [ ] Visualisasi interaktif
-- [ ] Drag & drop image
-- [ ] Antarmuka web
 
 ---
 
